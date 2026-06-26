@@ -207,13 +207,14 @@ async function seed() {
     ])
     .returning();
 
+  const demoVideo = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
   await db.insert(schema.lectures).values([
-    { sectionId: sec1.id, title: 'Welcome & Course Overview', duration: 5, order: 1, isFree: true },
-    { sectionId: sec1.id, title: 'Setting Up Your Environment', duration: 12, order: 2, isFree: true },
-    { sectionId: sec1.id, title: 'Your First React Component', duration: 18, order: 3, isFree: false },
-    { sectionId: sec2.id, title: 'useState Hook Explained', duration: 22, order: 1, isFree: false },
-    { sectionId: sec2.id, title: 'useEffect Hook Deep Dive', duration: 28, order: 2, isFree: false },
-    { sectionId: sec2.id, title: 'Custom Hooks', duration: 20, order: 3, isFree: false },
+    { sectionId: sec1.id, title: 'Welcome & Course Overview', duration: 5, order: 1, isFree: true, videoUrl: demoVideo },
+    { sectionId: sec1.id, title: 'Setting Up Your Environment', duration: 12, order: 2, isFree: true, videoUrl: demoVideo },
+    { sectionId: sec1.id, title: 'Your First React Component', duration: 18, order: 3, isFree: false, videoUrl: demoVideo },
+    { sectionId: sec2.id, title: 'useState Hook Explained', duration: 22, order: 1, isFree: false, videoUrl: demoVideo },
+    { sectionId: sec2.id, title: 'useEffect Hook Deep Dive', duration: 28, order: 2, isFree: false, videoUrl: demoVideo },
+    { sectionId: sec2.id, title: 'Custom Hooks', duration: 20, order: 3, isFree: false, videoUrl: demoVideo },
   ]);
 
   console.log('✅ Seeding complete!');
