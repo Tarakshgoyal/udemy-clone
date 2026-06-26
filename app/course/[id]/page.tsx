@@ -55,9 +55,9 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
   return (
     <div className="w-full flex flex-col font-sans text-gray-900 pb-20">
       {/* Dark Hero */}
-      <div className="bg-[#1c1d1f] text-white py-8 w-full">
-        <div className="max-w-[1180px] mx-auto px-6 flex flex-col lg:flex-row relative">
-          <div className="w-full lg:w-2/3 pr-0 lg:pr-12">
+      <div className="bg-[#1c1d1f] text-white py-8 w-full" style={{ minHeight: '320px' }}>
+        <div className="max-w-[1180px] mx-auto px-6 flex flex-col lg:flex-row relative h-full">
+          <div className="w-full lg:w-2/3 pr-0 lg:pr-12 flex flex-col justify-center">
             {/* Breadcrumb */}
             {category && (
               <div className="text-[#c0c4fc] text-sm font-bold flex items-center gap-2 mb-4 flex-wrap">
@@ -67,8 +67,8 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
               </div>
             )}
 
-            <h1 className="text-3xl lg:text-4xl font-bold mb-4 font-serif leading-tight">{course.title}</h1>
-            <p className="text-lg mb-4 text-gray-100">{course.description.slice(0, 200)}{course.description.length > 200 ? '...' : ''}</p>
+            <h1 className="text-3xl lg:text-4xl font-bold mb-4 font-serif leading-tight break-words">{course.title}</h1>
+            <p className="text-lg mb-4 text-gray-100 break-words">{course.description.slice(0, 200)}{course.description.length > 200 ? '...' : ''}</p>
 
             <div className="flex flex-wrap items-center gap-2 lg:gap-4 text-sm mb-4">
               {course.totalStudents > 10000 && (
@@ -102,31 +102,47 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
       <div className="max-w-[1180px] mx-auto px-6 mt-8 flex flex-col lg:flex-row relative">
         {/* Left Content */}
         <div className="w-full lg:w-2/3 pr-0 lg:pr-12">
+          {/* Premium Banner */}
+          <div className="border border-[#d1d7dc] bg-white rounded-sm mb-10 w-full flex items-center p-4 shadow-sm">
+            <div className="bg-[#a435f0] text-white p-4 flex flex-col justify-center items-center rounded-sm mr-4" style={{ minWidth: '120px' }}>
+              <Award className="w-5 h-5 mb-1" />
+              <span className="font-bold text-sm">Premium</span>
+            </div>
+            <div className="flex-1">
+              <p className="font-bold text-gray-900 leading-tight mb-1" style={{ fontSize: '15px' }}>Access 28,000+ top-rated courses with Udemy Personal Plan.</p>
+              <Link href="#" className="text-[#5624d0] hover:text-[#401b9c] underline text-sm font-bold">Learn more</Link>
+            </div>
+            <div className="hidden lg:flex items-center justify-around pl-4 border-l border-gray-200 ml-4" style={{ width: '40%' }}>
+              <div className="text-center w-1/2">
+                <span className="font-bold text-xl block">{course.rating.toFixed(1)}</span>
+                <div className="flex items-center justify-center text-[#f69c08] mb-0.5">
+                  <Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" />
+                </div>
+                <span className="text-xs text-[#5624d0] underline">{course.totalReviews.toLocaleString()} ratings</span>
+              </div>
+              <div className="text-center w-1/2 border-l border-gray-200">
+                <span className="font-bold text-xl block"><Users className="w-5 h-5 mx-auto mb-1 text-gray-700"/></span>
+                <span className="text-xs text-gray-600">{course.totalStudents.toLocaleString()} learners</span>
+              </div>
+            </div>
+          </div>
+
           {/* What You'll Learn */}
           {course.whatYouLearn.length > 0 && (
-            <div className="border border-gray-300 p-6 mb-10">
-              <h2 className="text-2xl font-bold mb-4">What you&apos;ll learn</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+            <div className="bg-white border border-[#d1d7dc] p-6 lg:p-8 mb-10 w-full">
+              <h2 className="text-2xl font-bold mb-6 font-serif text-gray-900">What you&apos;ll learn</h2>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 w-full">
                 {course.whatYouLearn.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-gray-700 shrink-0 mt-0.5" />
-                    <span className="text-sm">{item}</span>
-                  </div>
+                  <li key={idx} className="flex items-start gap-3 w-full">
+                    <Check className="w-5 h-5 text-gray-900 shrink-0 mt-0.5" />
+                    <span className="text-[14px] leading-relaxed text-gray-700">{item}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           )}
 
-          {/* Course Includes */}
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold mb-4">This course includes:</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3">
-              <div className="flex items-center gap-3 text-sm"><MonitorPlay className="w-4 h-4" /> {course.sections.length} sections • {totalLectures} lectures</div>
-              <div className="flex items-center gap-3 text-sm"><Award className="w-4 h-4" /> Certificate of completion</div>
-              <div className="flex items-center gap-3 text-sm"><Smartphone className="w-4 h-4" /> Access on mobile</div>
-              <div className="flex items-center gap-3 text-sm"><Infinity className="w-4 h-4" /> Full lifetime access</div>
-            </div>
-          </div>
+
 
           {/* Course Content */}
           <div className="mb-10">
@@ -175,39 +191,57 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
         </div>
 
         {/* Right Sidebar */}
-        <div className="w-full lg:w-1/3 mt-8 lg:mt-[-280px] z-10 hidden lg:block">
-          <div className="bg-white border border-gray-300 shadow-xl sticky top-8">
+        <div className="hidden lg:block absolute right-6 w-1/3 z-20 pointer-events-none h-full" style={{ top: '-260px', maxWidth: '340px' }}>
+          <div className="bg-white border border-gray-200 shadow-xl sticky top-8 pointer-events-auto">
             {course.thumbnailUrl && (
               <div className="relative w-full aspect-video bg-gray-900 cursor-pointer group overflow-hidden">
                 <img src={course.thumbnailUrl} alt={course.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity" />
                 {course.previewVideoUrl && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <PlayCircle className="w-16 h-16 text-white" fill="black" />
-                  </div>
+                  <>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                        <PlayCircle className="w-16 h-16 text-gray-900" fill="white" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-4 left-0 right-0 text-center font-bold text-white z-10 drop-shadow-md">
+                      Preview this course
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent"></div>
+                  </>
                 )}
               </div>
             )}
 
             <div className="p-6">
-              <div className="flex items-baseline gap-3 mb-4">
-                <span className="text-3xl font-bold">₹{course.price.toFixed(0)}</span>
-                {course.originalPrice && (
-                  <span className="text-lg text-gray-400 line-through">₹{course.originalPrice.toFixed(0)}</span>
-                )}
-                {course.originalPrice && (
-                  <span className="text-green-600 font-bold text-sm">
-                    {Math.round((1 - course.price / course.originalPrice) * 100)}% off
-                  </span>
-                )}
-              </div>
+              {!isEnrolled && (
+                <div className="flex items-baseline gap-3 mb-4">
+                  <span className="text-3xl font-bold">₹{course.price.toFixed(0)}</span>
+                  {course.originalPrice && (
+                    <span className="text-lg text-gray-400 line-through">₹{course.originalPrice.toFixed(0)}</span>
+                  )}
+                  {course.originalPrice && (
+                    <span className="text-green-600 font-bold text-sm">
+                      {Math.round((1 - course.price / course.originalPrice) * 100)}% off
+                    </span>
+                  )}
+                </div>
+              )}
 
               {isEnrolled ? (
-                <Link
-                  href={`/course/${id}/learn`}
-                  className="w-full bg-[#5624d0] hover:bg-[#401b9c] text-white font-bold py-3 flex items-center justify-center gap-2 transition-colors"
-                >
-                  <PlayCircle className="w-4 h-4" /> Go to Course
-                </Link>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="bg-[#a435f0] text-white rounded-full w-5 h-5 flex items-center justify-center shrink-0">
+                      <span className="text-xs font-bold leading-none">i</span>
+                    </div>
+                    <span className="font-bold text-gray-900 text-lg">You purchased this course</span>
+                  </div>
+                  <Link
+                    href={`/course/${id}/learn`}
+                    className="w-full bg-[#a435f0] hover:bg-[#8710d8] text-white font-bold py-3.5 flex items-center justify-center transition-colors rounded-sm text-[15px]"
+                  >
+                    Go to course
+                  </Link>
+                </div>
               ) : session ? (
                 <RazorpayCheckout
                   courseId={id}
@@ -225,9 +259,21 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                 </Link>
               )}
 
-              <div className="mt-4 space-y-2 text-xs text-gray-500 text-center">
+              <div className="mt-4 space-y-2 text-xs text-gray-500 text-center border-b border-gray-200 pb-4 mb-4">
                 <p>30-Day Money-Back Guarantee</p>
                 <p>Full Lifetime Access</p>
+              </div>
+
+              {/* Course Includes (Moved here per Udemy design) */}
+              <div>
+                <h3 className="font-bold text-gray-900 mb-3">This course includes:</h3>
+                <div className="flex flex-col gap-y-2.5">
+                  <div className="flex items-center gap-3 text-sm text-gray-700"><MonitorPlay className="w-4 h-4 shrink-0" /> {course.sections.length} sections • {totalLectures} lectures</div>
+                  <div className="flex items-center gap-3 text-sm text-gray-700"><FileText className="w-4 h-4 shrink-0" /> 19 articles</div>
+                  <div className="flex items-center gap-3 text-sm text-gray-700"><Download className="w-4 h-4 shrink-0" /> 167 downloadable resources</div>
+                  <div className="flex items-center gap-3 text-sm text-gray-700"><Smartphone className="w-4 h-4 shrink-0" /> Access on mobile and TV</div>
+                  <div className="flex items-center gap-3 text-sm text-gray-700"><Award className="w-4 h-4 shrink-0" /> Certificate of completion</div>
+                </div>
               </div>
             </div>
           </div>
