@@ -112,7 +112,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
               <p className="font-bold text-gray-900 leading-tight mb-1" style={{ fontSize: '15px' }}>Access 28,000+ top-rated courses with Udemy Personal Plan.</p>
               <Link href="#" className="text-[#5624d0] hover:text-[#401b9c] underline text-sm font-bold">Learn more</Link>
             </div>
-            <div className="hidden lg:flex items-center justify-around pl-4 border-l border-gray-200 ml-4" style={{ width: '40%' }}>
+            <div className="desktop-only flex items-center justify-around pl-4 border-l border-gray-200 ml-4" style={{ width: '40%' }}>
               <div className="text-center w-1/2">
                 <span className="font-bold text-xl block">{course.rating.toFixed(1)}</span>
                 <div className="flex items-center justify-center text-[#f69c08] mb-0.5">
@@ -191,7 +191,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
         </div>
 
         {/* Right Sidebar */}
-        <div className="hidden lg:block absolute right-6 w-1/3 z-20 pointer-events-none h-full" style={{ top: '-260px', maxWidth: '340px' }}>
+        <div className="desktop-only absolute right-6 z-20 pointer-events-none" style={{ top: '-260px', width: '340px', height: '100%' }}>
           <div className="bg-white border border-gray-200 shadow-xl sticky top-8 pointer-events-auto">
             {course.thumbnailUrl && (
               <div className="relative w-full aspect-video bg-gray-900 cursor-pointer group overflow-hidden">
