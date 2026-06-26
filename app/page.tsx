@@ -51,44 +51,58 @@ export default async function Home() {
   return (
     <div className="max-w-[1340px] mx-auto px-6 py-10 w-full">
       {/* Hero Section */}
-      <div className="flex items-center space-x-6 mb-12">
-        {user ? (
-          <>
-            <div className="w-16 h-16 rounded-full bg-[#5624d0] text-white flex items-center justify-center text-xl font-bold flex-shrink-0">
-              {user.name.charAt(0).toUpperCase()}
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold font-serif mb-1">Welcome back, {user.name.split(' ')[0]}!</h1>
-              {user.role === 'CREATOR' ? (
-                <Link href="/creator-studio" className="text-[#a435f0] font-bold text-sm hover:text-[#8710d8] underline">
-                  Go to Creator Studio →
-                </Link>
-              ) : (
-                <Link href="/my-courses/learning" className="text-[#5624d0] font-bold text-sm hover:text-[#401b9c] underline">
-                  Continue learning →
-                </Link>
-              )}
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-2xl">
-              🎓
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold font-serif mb-1">Welcome to Udemy</h1>
-              <div className="flex gap-3">
-                <Link href="/signup" className="text-[#5624d0] font-bold text-sm hover:text-[#401b9c] underline">
-                  Sign up free
-                </Link>
-                <span className="text-gray-300">|</span>
-                <Link href="/login" className="text-[#5624d0] font-bold text-sm hover:text-[#401b9c] underline">
-                  Log in
-                </Link>
-              </div>
-            </div>
-          </>
-        )}
+      <div className="relative w-full bg-[#f7f9fa] overflow-hidden mb-12 border border-gray-200">
+        <div className="max-w-[1340px] mx-auto px-6 py-16 flex flex-col md:flex-row items-center justify-between relative z-10">
+          <div className="bg-white p-6 md:p-8 shadow-lg max-w-md w-full z-10 border border-gray-100">
+            {user ? (
+              <>
+                <h1 className="text-4xl font-bold font-serif mb-3 leading-tight text-gray-900">
+                  Welcome back, {user.name.split(' ')[0]}!
+                </h1>
+                <p className="text-gray-600 mb-6 text-sm">
+                  Ready to dive back in? Continue your journey and reach your goals.
+                </p>
+                {user.role === 'CREATOR' ? (
+                  <Link href="/creator-studio" className="inline-block bg-[#5624d0] hover:bg-[#401b9c] text-white font-bold px-6 py-3 transition-colors text-sm w-full text-center">
+                    Go to Creator Studio
+                  </Link>
+                ) : (
+                  <Link href="/my-courses/learning" className="inline-block bg-[#5624d0] hover:bg-[#401b9c] text-white font-bold px-6 py-3 transition-colors text-sm w-full text-center">
+                    Continue Learning
+                  </Link>
+                )}
+              </>
+            ) : (
+              <>
+                <h1 className="text-4xl font-bold font-serif mb-3 leading-tight text-gray-900">
+                  Skills that drive you forward
+                </h1>
+                <p className="text-gray-600 mb-6 text-sm">
+                  Technology and the world of work change fast — with us, you're faster. Get the skills to achieve goals and stay competitive.
+                </p>
+                <div className="flex gap-3">
+                  <Link href="/signup" className="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-bold px-4 py-3 transition-colors text-center text-sm border border-gray-900">
+                    Sign up for free
+                  </Link>
+                  <Link href="/login" className="flex-1 bg-white hover:bg-gray-50 text-gray-900 font-bold px-4 py-3 transition-colors text-center text-sm border border-gray-900">
+                    Log in
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
+          
+          <div className="hidden md:block absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden bg-white">
+            {/* Using a placeholder unsplash image that looks like a student learning or a premium graphic */}
+            <img 
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" 
+              alt="Students learning" 
+              className="w-full h-full object-cover object-center opacity-90"
+            />
+            {/* Subtle gradient overlay to blend into the left side */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#f7f9fa] via-transparent to-transparent" />
+          </div>
+        </div>
       </div>
 
       {/* Recommended Section */}

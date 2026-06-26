@@ -1,4 +1,4 @@
-import { pgTable, text, integer, boolean, timestamp, real, pgEnum, primaryKey, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, text, integer, boolean, timestamp, real, pgEnum, primaryKey, uuid, unique } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
 // ─── Enums ────────────────────────────────────────────────────────────────────
@@ -107,7 +107,9 @@ export const enrollments = pgTable('enrollments', {
   progress: real('progress').notNull().default(0), // 0-100
   completedAt: timestamp('completed_at'),
   purchasedAt: timestamp('purchased_at').defaultNow().notNull(),
-});
+}, (t) => [
+  unique().on(t.userId, t.courseId)
+]);
 
 export const lectureProgress = pgTable('lecture_progress', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -116,7 +118,9 @@ export const lectureProgress = pgTable('lecture_progress', {
   completed: boolean('completed').notNull().default(false),
   watchedSeconds: real('watched_seconds').notNull().default(0),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
+}, (t) => [
+  unique().on(t.enrollmentId, t.lectureId)
+]);
 
 // ─── Payments ─────────────────────────────────────────────────────────────────
 
